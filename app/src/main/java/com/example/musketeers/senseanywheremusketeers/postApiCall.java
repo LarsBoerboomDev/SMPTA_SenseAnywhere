@@ -2,6 +2,8 @@ package com.example.musketeers.senseanywheremusketeers;
 
 import android.os.AsyncTask;
 
+import com.example.musketeers.senseanywheremusketeers.Interface.ASyncResponse;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,6 +16,7 @@ import java.sql.Connection;
 
 public class postApiCall extends AsyncTask<String, String ,String> {
 
+    public ASyncResponse delegate = null;
 
     @Override
     protected String doInBackground(String... params) {
@@ -44,7 +47,7 @@ public class postApiCall extends AsyncTask<String, String ,String> {
             System.out.print(output.toString());
             out.close();
 
-
+        return output.toString();
 
 
         } catch (Exception e) {
@@ -55,7 +58,9 @@ public class postApiCall extends AsyncTask<String, String ,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+        delegate.processFinish(s);
     }
+
+
 
 }

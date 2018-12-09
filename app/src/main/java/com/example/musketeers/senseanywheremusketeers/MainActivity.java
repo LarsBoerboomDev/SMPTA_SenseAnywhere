@@ -16,6 +16,7 @@ import android.telephony.CellInfo;
 import android.telephony.CellInfoLte;
 import android.telephony.TelephonyManager;
 
+import com.example.musketeers.senseanywheremusketeers.Interface.ASyncResponse;
 import com.example.musketeers.senseanywheremusketeers.Models.Cells;
 import com.example.musketeers.senseanywheremusketeers.Models.Location;
 import com.example.musketeers.senseanywheremusketeers.Models.Wifi;
@@ -26,7 +27,9 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements ASyncResponse{
+
+    postApiCall postApiCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String json =  getLocationJson(this);
+        postApiCall postApiCall = new postApiCall();
+        postApiCall.delegate = this;
+
+        new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",json);
 
 
     }
-
+    @Override
+    public void processFinish(String response){
+        System.out.println(response);
+    }
 
     public String getLocationJson(Context context){
         Location location = new Location();
@@ -115,11 +125,9 @@ public class MainActivity extends AppCompatActivity {
             location.setWifi(theWIfiList);
         }
         Gson gson = new Gson();
-        postApiCall postApiCall = new postApiCall();
-        new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",gson.toJson(location));
 
 
-        return null;
+        return gson.toJson(location).toString();
 
     }
 }
