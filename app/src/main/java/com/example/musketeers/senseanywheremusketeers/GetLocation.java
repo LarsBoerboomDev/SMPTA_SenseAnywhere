@@ -27,9 +27,14 @@ import java.util.List;
 
 public class GetLocation {
 
+    private Context context;
 
+    public GetLocation(Context context) {
+        this.context = context;
 
-    public String getLocationJson(Context context){
+    }
+
+    public String getLocationJson(){
         Location location = new Location();
         CellIdentityLte lte = null;
 

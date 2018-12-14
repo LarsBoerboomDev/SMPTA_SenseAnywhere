@@ -15,7 +15,11 @@ import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoLte;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.widget.Button;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.musketeers.senseanywheremusketeers.Interface.ASyncResponse;
 import com.example.musketeers.senseanywheremusketeers.Models.Cells;
 import com.example.musketeers.senseanywheremusketeers.Models.Location;
@@ -30,23 +34,64 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  implements ASyncResponse{
 
     postApiCall postApiCall;
+    String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String json =  getLocationJson(this);
-        postApiCall postApiCall = new postApiCall();
-        postApiCall.delegate = this;
+
 
       //  new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",json);
-        ServerCalls serverCalls = new ServerCalls(this);
+
+
+        Button sendButton = findViewById(R.id.buttonSendData);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDataSending();
+
+
+                }
+        });
 
     }
+
+    public void startDataSending(){
+
+        ServerCalls serverCalls = new ServerCalls(this);
+        serverCalls.getLast2(
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                       String theResponse = response;
+                        getLocation(theResponse);
+                        //Or call a function from the activity, or whatever...
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Show error or whatever...
+                    }
+                });
+
+    }
+
+    public void getLocation(String response){
+        String json =  getLocationJson(this);
+        this.response = response;
+        postApiCall postApiCall = new postApiCall();
+        postApiCall.delegate = this;
+        new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",json);
+
+
+    }
+
     @Override
     public void processFinish(String response){
-        System.out.println(response);
+        System.out.print(this.response);
+        System.out.print(response);
     }
 
     public String getLocationJson(Context context){
