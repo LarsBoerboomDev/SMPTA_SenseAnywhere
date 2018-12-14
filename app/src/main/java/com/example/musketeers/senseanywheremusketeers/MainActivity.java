@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity  implements ASyncResponse{
         postApiCall postApiCall = new postApiCall();
         postApiCall.delegate = this;
 
-        new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",json);
-
+      //  new postApiCall().execute("https://eu1.unwiredlabs.com/v2/process.php",json);
+        ServerCalls serverCalls = new ServerCalls(this);
 
     }
     @Override
