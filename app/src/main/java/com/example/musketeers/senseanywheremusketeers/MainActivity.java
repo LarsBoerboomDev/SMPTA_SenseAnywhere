@@ -1,37 +1,13 @@
 package com.example.musketeers.senseanywheremusketeers;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.CellIdentityLte;
-import android.telephony.CellInfo;
-import android.telephony.CellInfoLte;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.musketeers.senseanywheremusketeers.Interface.ASyncResponse;
-import com.example.musketeers.senseanywheremusketeers.Models.Cells;
-import com.example.musketeers.senseanywheremusketeers.Models.Location;
-import com.example.musketeers.senseanywheremusketeers.Models.Wifi;
-import com.example.musketeers.senseanywheremusketeers.Volley.PostOpenCellId;
 import com.example.musketeers.senseanywheremusketeers.Volley.VolleyCalls;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
