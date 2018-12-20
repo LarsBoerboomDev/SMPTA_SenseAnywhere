@@ -112,7 +112,7 @@ public class GetLocation {
         Gson gson = new Gson();
 
 
-       return  gson.toJson(location);
+       return  gson.toJson(location).toString();
         
     }
 
