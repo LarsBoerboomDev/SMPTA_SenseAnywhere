@@ -24,6 +24,8 @@ import com.example.musketeers.senseanywheremusketeers.Interface.ASyncResponse;
 import com.example.musketeers.senseanywheremusketeers.Models.Cells;
 import com.example.musketeers.senseanywheremusketeers.Models.Location;
 import com.example.musketeers.senseanywheremusketeers.Models.Wifi;
+import com.example.musketeers.senseanywheremusketeers.Volley.PostOpenCellId;
+import com.example.musketeers.senseanywheremusketeers.Volley.VolleyCalls;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -34,7 +36,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  implements ASyncResponse{
 
     postApiCall postApiCall;
+    String temperatureData;
+    String locationJson;
     String response;
+
+
+    public void setTemperatureData(String temperatureData) {
+        this.temperatureData = temperatureData;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +59,8 @@ public class MainActivity extends AppCompatActivity  implements ASyncResponse{
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDataSending();
+                //startDataSending();
+                start();
 
 
                 }
@@ -58,15 +68,66 @@ public class MainActivity extends AppCompatActivity  implements ASyncResponse{
 
     }
 
+    public void start(){
+        VolleyCalls volleyCalls = new VolleyCalls();
+        volleyCalls.getLast2(this, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String theResponse = response;
+                setTemperatureData(theResponse);
+                getLocation();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+    }
+    public void getLocation(){
+        String json = getLocationJson(this);
+        VolleyCalls calls = new VolleyCalls();
+        calls.PostCellApi(json, this, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.print(response);
+                locationJson = response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
     public void startDataSending(){
 
         ServerCalls serverCalls = new ServerCalls(this);
+
+
         serverCalls.getLast2(
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                        String theResponse = response;
-                        getLocation(theResponse);
+                        PostOpenCellId postOpenCellId = new PostOpenCellId();
+                        postOpenCellId.setContext(getApplicationContext());
+                        postOpenCellId.postLocation(new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        });
+
+                        //getLocation(theResponse);
                         //Or call a function from the activity, or whatever...
                     }
                 }, new Response.ErrorListener() {
@@ -87,6 +148,9 @@ public class MainActivity extends AppCompatActivity  implements ASyncResponse{
 
 
     }
+
+
+
 
     @Override
     public void processFinish(String response){
