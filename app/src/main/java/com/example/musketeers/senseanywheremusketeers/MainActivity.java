@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity  implements ASyncResponse{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainMAIN);
+        setContentView(R.layout.activity_mainmain);
 
 
 

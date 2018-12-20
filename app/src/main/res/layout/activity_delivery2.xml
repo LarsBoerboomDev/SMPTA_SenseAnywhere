@@ -11,7 +11,7 @@
         android:layout_width="97dp"
         android:layout_height="45dp"
         android:background="@drawable/roundedbutton"
-        android:text="<< Stop"
+        android:text="Stop"
         android:textColor="#f9f7f7"
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="331dp" />

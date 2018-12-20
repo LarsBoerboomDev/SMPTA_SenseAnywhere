@@ -22,8 +22,6 @@ public class ServerCalls {
 
     public ServerCalls(Context context) {
         this.context = context;
-
-
     }
 
 

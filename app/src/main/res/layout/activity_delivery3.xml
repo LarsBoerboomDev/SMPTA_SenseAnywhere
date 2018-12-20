@@ -11,7 +11,7 @@
         android:layout_width="97dp"
         android:layout_height="45dp"
         android:background="@drawable/roundedbutton"
-        android:text="<< Back"
+        android:text="Back"
         android:textColor="#f9f7f7"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="49dp" />
@@ -124,7 +124,7 @@
 
     <EditText
         android:id="@+id/editText10"
-        android:layout_width="51dp"
+        android:layout_width="55dp"
         android:layout_height="69dp"
         android:ems="10"
         android:inputType="number"
