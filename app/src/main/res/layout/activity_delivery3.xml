@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="97dp"
+        android:layout_height="45dp"
+        android:background="@drawable/roundedbutton"
+        android:text="<< Back"
+        android:textColor="#f9f7f7"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="49dp" />
+
+    <Button
+        android:id="@+id/button13"
+        android:layout_width="47dp"
+        android:layout_height="43dp"
+        android:background="@drawable/roundedbutton"
+        android:text="+"
+        android:textColor="#f9f7f7"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="49dp" />
+
+    <Button
+        android:id="@+id/button14"
+        android:layout_width="97dp"
+        android:layout_height="45dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Stop"
+        android:textColor="#f9f7f7"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="49dp" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="127dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Time of Arrival"
+        tools:layout_editor_absoluteX="190dp"
+        tools:layout_editor_absoluteY="211dp" />
+
+    <EditText
+        android:id="@+id/editText12"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Current Time"
+        tools:layout_editor_absoluteX="190dp"
+        tools:layout_editor_absoluteY="104dp" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Temperature"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="104dp" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="17dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text=":"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="241dp"
+        tools:layout_editor_absoluteY="241dp" />
+
+    <EditText
+        android:id="@+id/editText14"
+        android:layout_width="17dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text=":"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="241dp"
+        tools:layout_editor_absoluteY="142dp" />
+
+    <EditText
+        android:id="@+id/editText11"
+        android:layout_width="51dp"
+        android:layout_height="69dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="23"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="241dp" />
+
+    <EditText
+        android:id="@+id/editText15"
+        android:layout_width="51dp"
+        android:layout_height="69dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="10"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="142dp" />
+
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="51dp"
+        android:layout_height="69dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="12"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="190dp"
+        tools:layout_editor_absoluteY="241dp" />
+
+    <EditText
+        android:id="@+id/editText13"
+        android:layout_width="51dp"
+        android:layout_height="69dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="10"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="190dp"
+        tools:layout_editor_absoluteY="142dp" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="51dp"
+        android:layout_height="69dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="10"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="26dp"
+        android:layout_height="38dp"
+        android:ems="10"
+        android:text="°C"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="150dp" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="318dp"
+        android:layout_height="166dp"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="329dp" />
+</android.support.constraint.ConstraintLayout>
