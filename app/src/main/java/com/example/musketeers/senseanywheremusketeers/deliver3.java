@@ -1,10 +1,7 @@
 package com.example.musketeers.senseanywheremusketeers;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -12,6 +9,13 @@ import com.example.musketeers.senseanywheremusketeers.Models.DatabaseJson;
 import com.example.musketeers.senseanywheremusketeers.Models.Return;
 import com.example.musketeers.senseanywheremusketeers.Models.TempLocation;
 import com.example.musketeers.senseanywheremusketeers.Volley.VolleyCalls;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,32 +24,43 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
-
+public class deliver3 extends AppCompatActivity implements OnMapReadyCallback {
     String temperatureData;
     String locationJson;
+    private GoogleMap map;
+    private MapView mapView;
 
     public void setTemperatureData(String temperatureData) {
         this.temperatureData = temperatureData;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button sendButton = findViewById(R.id.ButtonShipping);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,deliver2.class);
-                startActivity(intent);
-                //start();
-                }
-        });
+    public void onMapReady(GoogleMap googleMap) {
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mapView = findViewById(R.id.mapView2);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView2);
+        mapFragment.getMapAsync(this);
+
+
+        Timer timer = new Timer();
+        TimerTask fiveMinuteTask = new TimerTask() {
+            @Override
+            public void run() {
+                start();
+            }
+        };
+        timer.schedule(fiveMinuteTask,01,1000*30*30);
+
+    }
+
 
     public void start(){
         VolleyCalls volleyCalls = new VolleyCalls();
@@ -109,6 +124,16 @@ public class MainActivity extends AppCompatActivity {
             DatabaseReference myRef = database.getReference("senseanywhere-34968/data");
             myRef.push().setValue(tempLocation);
         }
+        updateGUI(openCellIdLocation);
     }
 
+    public void updateGUI(Return opencellIdLocation){
+        MapView mapView = findViewById(R.id.mapView2);
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng((Double.valueOf(opencellIdLocation.getLat())), Double.valueOf(opencellIdLocation.getLon())));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        map.moveCamera(center);
+        map.animateCamera(zoom);
+        onMapReady(map);
+
+    }
 }

@@ -20,7 +20,7 @@
         android:text="Packing"
         android:textColor="#f9f7f7"
         app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/ButtonShipping"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/ButtonShipping"
         android:layout_width="137dp"
         android:layout_height="134dp"
         android:layout_marginBottom="39dp"
