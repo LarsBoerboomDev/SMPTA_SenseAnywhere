@@ -9,8 +9,16 @@ public class TempLocation {
     String latitude;
     String address;
     String accuracy;
+    String eventType;
+    String date;
+    String devicId;
 
-    public TempLocation(String id, String temperature, String humidity, String longtitude, String latitude, String address, String accuracy) {
+
+    public  TempLocation(){
+
+    }
+
+    public TempLocation(String id, String temperature, String humidity, String longtitude, String latitude, String address, String accuracy, String eventType, String date, String devicId) {
         this.id = id;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -18,6 +26,9 @@ public class TempLocation {
         this.latitude = latitude;
         this.address = address;
         this.accuracy = accuracy;
+        this.eventType = eventType;
+        this.date = date;
+        this.devicId = devicId;
     }
 
     public String getId() {
@@ -74,5 +85,29 @@ public class TempLocation {
 
     public void setAccuracy(String accuracy) {
         this.accuracy = accuracy;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        date = date;
+    }
+
+    public String getDevicId() {
+        return devicId;
+    }
+
+    public void setDevicId(String devicId) {
+        this.devicId = devicId;
     }
 }
