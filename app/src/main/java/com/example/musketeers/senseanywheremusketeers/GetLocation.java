@@ -81,12 +81,13 @@ public class GetLocation {
                 if(info instanceof  CellInfoLte){
                     lte = ((CellInfoLte) info).getCellIdentity();
                 }
-
             }
-
         }
+
+        //a22f89fe9c45ef
+        //4a0744e1f59c1d
         location.setAddress("1");
-        location.setToken("4a0744e1f59c1d");
+        location.setToken("a22f89fe9c45ef");
         location.setRadio("gsm");
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
 

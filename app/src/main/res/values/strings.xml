@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SenseAnywhereMusketeers</string>
+    <string name="temperature">Temperature</string>
+    <string name="currenttime">Current time</string>
 </resources>

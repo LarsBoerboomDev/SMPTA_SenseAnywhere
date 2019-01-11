@@ -1,5 +1,9 @@
 package com.example.musketeers.senseanywheremusketeers.Models;
 
+import android.content.Intent;
+
+import java.sql.Timestamp;
+
 public class TempLocation {
     //Hier komt de model met de temperatuur en locatie
     String id;
@@ -12,7 +16,7 @@ public class TempLocation {
     String eventType;
     String date;
     String devicId;
-
+    Timestamp time;
 
     public  TempLocation(){
 
@@ -29,6 +33,14 @@ public class TempLocation {
         this.eventType = eventType;
         this.date = date;
         this.devicId = devicId;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public String getId() {
@@ -100,7 +112,7 @@ public class TempLocation {
     }
 
     public void setDate(String date) {
-        date = date;
+        this.date = date;
     }
 
     public String getDevicId() {
@@ -109,5 +121,10 @@ public class TempLocation {
 
     public void setDevicId(String devicId) {
         this.devicId = devicId;
+    }
+
+    public String getTempCalc(){
+        String temp = String.valueOf(Integer.valueOf(getTemperature()) / 100);
+        return temp;
     }
 }

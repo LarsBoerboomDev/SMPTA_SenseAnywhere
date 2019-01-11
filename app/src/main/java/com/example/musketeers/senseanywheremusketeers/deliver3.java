@@ -1,7 +1,14 @@
 package com.example.musketeers.senseanywheremusketeers;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,47 +24,92 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.core.FirestoreClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class deliver3 extends AppCompatActivity implements OnMapReadyCallback {
+public class deliver3 extends AppCompatActivity {
     String temperatureData;
     String locationJson;
-    private GoogleMap map;
-    private MapView mapView;
+
+    Button stopTracking;
+    Button startTracking;
+    Button back;
+
+    Timer timer = new Timer();
+    TimerTask fiveMinuteTask;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    List<Integer> tempgem = new ArrayList<>();
+
+    TextView gemTemp;
+    WebView map;
 
     public void setTemperatureData(String temperatureData) {
         this.temperatureData = temperatureData;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapView = findViewById(R.id.mapView2);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView2);
-        mapFragment.getMapAsync(this);
+        setContentView(R.layout.activity_activitydeliverpage3);
+        gemTemp = findViewById(R.id.textViewTemp);
+        map = findViewById(R.id.webview);
+
+        stopTracking = findViewById(R.id.buttonStopTracking);
+        stopTracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timer.cancel();
+            }
+        });
+
+        back = findViewById(R.id.buttonBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(deliver3.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        startTracking = findViewById(R.id.buttonStartTracking);
+        startTracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timer = new Timer();
+                timer.schedule(fiveMinuteTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        start();
+                    }
+                }, 0, 60*5000);
+            }
+        });
 
 
-        Timer timer = new Timer();
-        TimerTask fiveMinuteTask = new TimerTask() {
+         fiveMinuteTask = new TimerTask() {
             @Override
             public void run() {
                 start();
             }
         };
-        timer.schedule(fiveMinuteTask,01,1000*30*30);
+        timer.schedule(fiveMinuteTask,0,60*5000);
 
     }
 
@@ -98,17 +150,17 @@ public class deliver3 extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+
+
     public void saveToFireBase(){
         Gson gson = new Gson();
-
-
         Type collectionType = new TypeToken<Collection<DatabaseJson>>(){}.getType();
         Collection<DatabaseJson> databaseJsons = gson.fromJson(temperatureData, collectionType);
-
         Return openCellIdLocation = gson.fromJson(locationJson, Return.class);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         for(DatabaseJson databaseJson : databaseJsons){
             TempLocation tempLocation = new TempLocation();
             tempLocation.setLatitude(openCellIdLocation.getLat());
@@ -121,19 +173,35 @@ public class deliver3 extends AppCompatActivity implements OnMapReadyCallback {
             tempLocation.setEventType(databaseJson.getEvent());
             tempLocation.setDate(databaseJson.getDT_Event());
             FirebaseApp.initializeApp(this);
-            DatabaseReference myRef = database.getReference("senseanywhere-34968/data");
-            myRef.push().setValue(tempLocation);
+            tempgem.add(Integer.parseInt(databaseJson.getParam2()));
+
+            db.collection("temperatureloc1").add(tempLocation);
         }
-        updateGUI(openCellIdLocation);
+        calcGemTemp();
+        setMap(openCellIdLocation);
+    }
+//www.google.nl/maps/@51.4550291,5.4808759,15
+    public void setMap(Return location){
+        map.setWebViewClient(new WebViewClient());
+        map.getSettings().setJavaScriptEnabled(true);
+        //http://www.google.com/maps?q=37.423156,-122.084917
+        String url ="http://google.com/maps?q=" + location.getLat() + "," + location.getLon();
+        map.loadUrl("http://google.com/maps?q=" + location.getLat() + "," + location.getLon());
     }
 
-    public void updateGUI(Return opencellIdLocation){
-        MapView mapView = findViewById(R.id.mapView2);
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng((Double.valueOf(opencellIdLocation.getLat())), Double.valueOf(opencellIdLocation.getLon())));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
-        map.moveCamera(center);
-        map.animateCamera(zoom);
-        onMapReady(map);
+    public void calcGemTemp(){
+        int count = 0;
+        for (int t : tempgem){
+            count = count + t;
+        }
+        String gem = String.valueOf(count / tempgem.size());
+        gemTemp.setText(gem);
+        tempgem.clear();
+    }
+    public void setTime(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
+        String strDate =  mdformat.format(calendar.getTime());
 
     }
 }

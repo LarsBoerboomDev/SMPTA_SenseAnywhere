@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     String temperatureData;
     String locationJson;
 
+
+
     public void setTemperatureData(String temperatureData) {
         this.temperatureData = temperatureData;
     }
@@ -36,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button sendButton = findViewById(R.id.ButtonShipping);
+
+        Button startTrack = findViewById(R.id.buttonTracking);
+        startTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, tracking.class);
+                startActivity(intent);
+            }
+        });
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

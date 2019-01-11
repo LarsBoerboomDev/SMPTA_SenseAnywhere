@@ -14,6 +14,13 @@ public class deliver2 extends AppCompatActivity {
         setContentView(R.layout.activity_deliver2);
 
         Button button = findViewById(R.id.buttonStartDelivery);
+        Button buttonback = findViewById(R.id.buttonBack);
+        buttonback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

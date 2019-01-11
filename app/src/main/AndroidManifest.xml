@@ -26,7 +26,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".deliver2" />
-        <activity android:name=".deliver3"></activity>
+        <activity android:name=".deliver3" />
+        <activity android:name=".activitydeliverpage3" />
+        <activity android:name=".tracking"></activity>
     </application>
 
 </manifest>
