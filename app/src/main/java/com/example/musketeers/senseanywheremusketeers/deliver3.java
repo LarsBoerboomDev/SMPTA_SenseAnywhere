@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -163,6 +164,7 @@ public class deliver3 extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         for(DatabaseJson databaseJson : databaseJsons){
             TempLocation tempLocation = new TempLocation();
+
             tempLocation.setLatitude(openCellIdLocation.getLat());
             tempLocation.setLongtitude(openCellIdLocation.getLon());
             tempLocation.setAddress(openCellIdLocation.getAddress());
@@ -172,6 +174,7 @@ public class deliver3 extends AppCompatActivity {
             tempLocation.setDevicId(databaseJson.getDeviceID());
             tempLocation.setEventType(databaseJson.getEvent());
             tempLocation.setDate(databaseJson.getDT_Event());
+            tempLocation.setTime(new Timestamp(System.currentTimeMillis()));
             FirebaseApp.initializeApp(this);
             tempgem.add(Integer.parseInt(databaseJson.getParam2()));
 
@@ -194,8 +197,8 @@ public class deliver3 extends AppCompatActivity {
         for (int t : tempgem){
             count = count + t;
         }
-        String gem = String.valueOf(count / tempgem.size());
-        gemTemp.setText(gem);
+        String gem = String.valueOf(count / tempgem.size() / 100);
+        gemTemp.setText(gem + "°C");
         tempgem.clear();
     }
     public void setTime(){

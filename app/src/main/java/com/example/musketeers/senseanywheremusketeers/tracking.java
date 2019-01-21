@@ -19,6 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -38,7 +40,7 @@ public class tracking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
         listView = findViewById(R.id.listViewTracking);
-        load();
+
 
         TimerTask task = new TimerTask() {
             @Override
@@ -52,15 +54,26 @@ public class tracking extends AppCompatActivity {
 
 
     private void load(){
-
+        locations.clear();
         CollectionReference documentReference = db.collection("temperatureloc1");
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        documentReference.orderBy("time").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         TempLocation tempLocation = new TempLocation();
-                        tempLocation.setDate((String) document.get("date"));
+                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+                        try {
+                            tempLocation.setDate(df.format(document.get("time")));
+
+                        }
+                        catch (Exception e){
+                            tempLocation.setDate("Not available");
+                        }
+                        //tempLocation.setDate((String) document.get("time"));
                         tempLocation.setTemperature((String) document.get("temperature"));
                         tempLocation.setAddress((String) document.get("address"));
                         if(tempLocation.getAddress() == null){
@@ -77,7 +90,6 @@ public class tracking extends AppCompatActivity {
     }
 
     private void fillListView(){
-        listView.setAdapter(null);
         adapter adapter = new adapter();
         listView.setAdapter(adapter);
     }
